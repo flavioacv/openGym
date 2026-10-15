@@ -85,7 +85,7 @@ const gainedWorkoutMedia = (prev, next) => {
   return workoutMediaHashes(next).some(h => !had.has(h))
 }
 export const DEF = {
-  unit: 'kg', restSec: 90, restPauseSec: 15, sound: true, soundOnSilent: false, vibrateOnSilent: false, timerFlash: false, timedSetOvertime: false, keepAwake: true, lang: 'en',
+  unit: 'kg', restSec: 90, restPauseSec: 15, sound: true, soundOnSilent: false, vibrateOnSilent: false, timerFlash: false, timedSetOvertime: false, keepAwake: true, lang: 'pt-BR',
   theme: 'dark', accent: 'lime', body: 'male', targetW: null,
   bodyweight: [], routines: [], week: {}, dayPlan: {},
   // A note per day off (#261): { [iso]: { tag, text, _ts } } (lib/day-notes.js). A noted day is
@@ -249,7 +249,7 @@ const detectedLang = () => {
     const base = (navigator.language || '').toLowerCase().split('-')[0]
     if (RTL_LANGS.has(base)) return base
   } catch (e) { /* ignore */ }
-  return 'en'
+  return 'pt-BR'
 }
 
 // A copy started from nothing on this device. `langAuto` marks its language as one nobody has
@@ -282,7 +282,7 @@ function loadState() {
     if (raw) {
       const saved = JSON.parse(raw)
       const s = sanitizeAccent(Object.assign(clone(DEF), saved))
-      if (!saved.lang) s.lang = detectedLang()
+      if (!saved.lang || (saved.langAuto && saved.lang === 'en')) s.lang = detectedLang()
       return s
     }
   } catch (e) { /* ignore */ }
